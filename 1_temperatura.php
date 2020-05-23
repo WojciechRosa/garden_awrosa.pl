@@ -129,7 +129,7 @@ var todayDate = new Date();
 var data = [trace1];
 
 var layout = {
-  title: 'Temperatura Ogród (ostatni tydzień)',
+  title: 'Temperatura Ogród (przegląd)',
   xaxis: {
     range: ['2020-05-18', todayDate.toString()  ],
     rangeselector: {buttons: [
