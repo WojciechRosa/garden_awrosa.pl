@@ -125,6 +125,7 @@ table.blueTable tfoot .links a{
   <div class="menu">
     <a href="?id=1">Stacja Pogodowa</a>
     <a href="?id=2">Podlewanie</a>
+	<a href="?id=3">Oświetlenie</a>
     <a href="#">Wilgotność Gleby</a>
     <a href="?id=9">testy</a>
   </div>
@@ -142,6 +143,8 @@ table.blueTable tfoot .links a{
   		  include ('1_temperatura.php');
   		elseif ($id==2):
   		 include ('2_podlewanie.php');
+  		elseif ($id==3):
+  		 include ('3_oswietlenie.php');
       elseif ($id==9):
         include ('9_testy.php');
   		else:
