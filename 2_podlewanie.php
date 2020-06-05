@@ -53,13 +53,17 @@ function ifAnyOpen()
     global $gpio_zawor_trawaFront;
     global $gpio_rododendrony;
     global $gpio_linia_taras;
+    global $gpio_warzywa;
+    global $gpio_linia_tyl;
 
     $test=0;
     $test=read_pin($gpio_zawor_trawaFront) ;
     $test=$test+read_pin($gpio_zawor_trawaAltana);
     $test=$test+read_pin($gpio_rododendrony);
     $test=$test+read_pin($gpio_linia_taras);
-    $test=4-$test;
+    $test=$test+read_pin($gpio_warzywa);
+    $test=$test+read_pin($gpio_linia_tyl);
+    $test=6-$test;
     return $test;
     
 }
@@ -71,12 +75,16 @@ function stopAll()
     global $gpio_zawor_trawaFront;
     global $gpio_rododendrony;
     global $gpio_linia_taras;
+    global $gpio_warzywa;
+    global $gpio_linia_tyl;
 
     set_pin($gpio_pump, 1);
     set_pin($gpio_zawor_trawaAltana, 1);
     set_pin($gpio_zawor_trawaFront, 1);
     set_pin($gpio_rododendrony, 1);
     set_pin($gpio_linia_taras, 1);
+    set_pin($gpio_warzywa, 1);
+    set_pin($gpio_linia_tyl, 1);
     //set_pin($gpio_zawor_trawaAltana, 1);
     //set_pin($gpio_zawor_trawaFront, 1);
 
@@ -113,6 +121,8 @@ function pompaStatus()
     global $gpio_rododendrony;
     global $gpio_water_max_test;
     global $gpio_linia_taras;
+    global $gpio_warzywa;
+    global $gpio_linia_tyl;
 
 
 echo '<table class="blueTable">';
@@ -170,7 +180,19 @@ echo '<thead> <tr>  <th >sekcja</th>  <th >action</th> <th>status</th>   </tr> <
     {echo "<td class='red'>OTWARTE";} else {echo " <td class='green'> ZAMKNIĘTE";}
     echo '</td></tr>';
 
+    // strefa 
+    echo '<tr>   <td > linia kroplująca tuje </td>  ';
+    echo '<td align=center> <form method="post"> <input type="submit" value="zmień" name="gpio_linia_tyl" /> </form> </td>"';
+    if (read_pin($gpio_linia_tyl)<>1 )
+    {echo "<td class='red'>OTWARTE";} else {echo " <td class='green'>ZAMKNIĘTE";}
+    echo '</td></tr>';
 
+    // strefa  linia taras
+    echo '<tr>   <td > warzywa </td>  ';
+    echo '<td align=center> <form method="post"> <input type="submit" value="zmień" name="gpio_warzywa" /> </form> </td>"';
+    if (read_pin($gpio_warzywa)<>1 )
+    {echo "<td class='red'>OTWARTE";} else {echo " <td class='green'> ZAMKNIĘTE";}
+    echo '</td></tr>';
 echo '</table>';
 
 echo '<br>';
@@ -204,7 +226,16 @@ if(isset($_POST['gpio_linia_taras']))
      change_pin($gpio_linia_taras);  
      pompaStartStop();
 }
-
+if(isset($_POST['gpio_linia_tyl']))
+{
+     change_pin($gpio_linia_tyl);  
+     pompaStartStop();
+}
+if(isset($_POST['gpio_warzywa']))
+{
+     change_pin($gpio_warzywa);  
+     pompaStartStop();
+}
 if(isset($_POST['action_stop_all']))
 {
     stopAll();

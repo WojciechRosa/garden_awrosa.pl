@@ -134,11 +134,19 @@ table.blueTable tfoot .links a{
 
   	<?PHP
   		ini_set('display_errors', 'On');
-		  error_reporting(E_ALL);
-
-
-  		$id = htmlspecialchars($_GET["id"]);
-
+		error_reporting(E_ALL);
+		  
+		  
+		if(empty($_GET['id'])):
+			$id=1;
+		else:
+			$id = htmlspecialchars($_GET["id"]);
+		endif	;	
+		
+		
+		if ( is_numeric($id)==false): {$id=1;} endif;
+		
+			
   		if ($id==1):
   		  include ('1_temperatura.php');
   		elseif ($id==2):
